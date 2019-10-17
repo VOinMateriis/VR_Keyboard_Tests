@@ -4,21 +4,31 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using Valve.VR;
 using UnityEngine.UI;
+using Valve.VR.InteractionSystem;
 
 public class Laser : MonoBehaviour
 {
+    public GameObject hand;
     public GameObject keyboard;
     public SteamVR_Action_Boolean trigger;
-    GameObject currentUI = null;
 
-    private bool hovering;
+    private GameObject currentUI = null;
     private LineRenderer laser;
     private GameObject dot;
+    private SteamVR_Input_Sources _hand;
+    private bool hovering;
 
     private void Start()
     {
+        transform.parent = hand.transform;
+
         laser = GetComponent<LineRenderer>();
         dot = transform.GetChild(0).gameObject;
+
+        if (hand.name == "RightHand")
+            _hand = SteamVR_Input_Sources.RightHand;
+        else if (hand.name == "LeftHand")
+            _hand = SteamVR_Input_Sources.LeftHand;
     }
 
     // Update is called once per frame
@@ -38,7 +48,7 @@ public class Laser : MonoBehaviour
                 ExecuteEvents.Execute(currentUI, pointer, ExecuteEvents.pointerEnterHandler);
                 hovering = true;
 
-                if (trigger.GetStateDown(SteamVR_Input_Sources.Any))
+                if (trigger.GetStateDown(_hand))
                 {
                     if (currentUI.CompareTag("InputField"))
                     {
@@ -80,7 +90,7 @@ public class Laser : MonoBehaviour
         ExecuteEvents.Execute(currentUI, pointer, ExecuteEvents.pointerDownHandler);
         yield return new WaitForSeconds(0.1f);
         ExecuteEvents.Execute(currentUI, pointer, ExecuteEvents.pointerUpHandler);
-        ExecuteEvents.Execute(currentUI, pointer, ExecuteEvents.deselectHandler);
+        ExecuteEvents.Execute(currentUI, pointer, ExecuteEvents.deselectHandler);   //Makes the UI element to get back its unhovered style
     }
 
 
