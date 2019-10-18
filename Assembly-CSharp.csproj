@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Keyboard.cs" />
     <Compile Include="Assets\Scripts\Laser.cs" />
+    <Compile Include="Assets\Scripts\SaveLoad.cs" />
     <Compile Include="Assets\Scripts\ShowControllers.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>C:/Users/xonoz/Desktop/Vidal/Keyboard/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
