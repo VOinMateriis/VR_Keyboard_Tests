@@ -1,0 +1,35 @@
+[33mcommit 45c0fed1b7cda33766a4c652c4a2fd67af675020[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Author: Verum VR Medical <verumvrmedical@gmail.com>
+Date:   Mon Oct 21 12:06:17 2019 -0500
+
+    Previous UI elements deselection - Laser pointer and keyboard made into prefabs
+
+[33mcommit 0c6b70aa327a67d91120415239e323bd8a5779e8[m[33m ([m[1;31morigin/master[m[33m)[m
+Author: Verum VR Medical <verumvrmedical@gmail.com>
+Date:   Fri Oct 18 14:02:54 2019 -0500
+
+    Tests on data persistence (Input field text)
+
+[33mcommit 1ff8f155b7b09cb499bb5af6a0d96b3396d16938[m
+Author: Verum VR Medical <verumvrmedical@gmail.com>
+Date:   Thu Oct 17 14:02:22 2019 -0500
+
+    Keyboard keys added - Functionality tests
+
+[33mcommit 89767d999197a1124046d77b5cc04abf94d78986[m
+Author: Verum VR Medical <verumvrmedical@gmail.com>
+Date:   Thu Oct 17 10:42:24 2019 -0500
+
+    Laser resizes when hitting a collider
+
+[33mcommit 8b1608f160eb51e4267b21fa9d30e8ea35f207e8[m
+Author: Verum VR Medical <verumvrmedical@gmail.com>
+Date:   Wed Oct 16 13:59:17 2019 -0500
+
+    Laser tests
+
+[33mcommit a909b39031f0d39ba728100181a237f0fd88bf81[m
+Author: Verum VR Medical <verumvrmedical@gmail.com>
+Date:   Tue Oct 15 13:59:42 2019 -0500
+
+    Laser pointer and input field initial tests

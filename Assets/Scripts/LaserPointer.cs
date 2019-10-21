@@ -11,6 +11,7 @@ using UnityEngine.UI;
 
 public class LaserPointer : MonoBehaviour
 {
+    public GameObject hand;
     public GameObject keyboard;
     public SteamVR_Action_Boolean trigger;
     public float laserDistance = 1;
@@ -19,21 +20,22 @@ public class LaserPointer : MonoBehaviour
     private List<GameObject> previousUI = new List<GameObject>();
     private LineRenderer laser;
     private GameObject dot;
-    private SteamVR_Input_Sources hand;
+    private SteamVR_Input_Sources _hand;
     private bool hovering;
 
 
     //================================================================================
     private void Start()
     {
+        transform.parent = hand.transform;
         laser = GetComponent<LineRenderer>();
         dot = transform.GetChild(0).gameObject;
 
         //Get the hand that the LaserPointer game object is attached to
-        if (transform.parent.name == "RightHand")
-            hand = SteamVR_Input_Sources.RightHand;
-        else if (transform.parent.name == "LeftHand")
-            hand = SteamVR_Input_Sources.LeftHand;
+        if (hand.name == "RightHand")
+            _hand = SteamVR_Input_Sources.RightHand;
+        else if (hand.name == "LeftHand")
+            _hand = SteamVR_Input_Sources.LeftHand;
     }
 
 
@@ -65,7 +67,7 @@ public class LaserPointer : MonoBehaviour
             ExecuteEvents.Execute(currentUI, pointer, ExecuteEvents.pointerEnterHandler);
             
             //If the trigger is pressed while pointing the UI element, clicks it
-            if (trigger.GetStateDown(hand))
+            if (trigger.GetStateDown(_hand))
             {
                 //If the clicked UI element is an input field, opens the keyboard
                 if (currentUI.CompareTag("InputField") && keyboard != null)
