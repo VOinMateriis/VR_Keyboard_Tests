@@ -128,7 +128,10 @@ MonoBehaviour:
   trigger:
     actionPath: /actions/default/in/InteractUI
     needsReinit: 0
-  laserDistance: 1
+  laserDistance: 2
+  UI_Layer: UI
+  InputField_Tag: InputField
+  SliderScroll_Tag: Slider_Scroll
 --- !u!120 &5453813129736131319
 LineRenderer:
   m_ObjectHideFlags: 0

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Button
   - InputField
+  - Slider_Scroll
   layers:
   - Default
   - TransparentFX

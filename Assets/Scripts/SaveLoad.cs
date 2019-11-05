@@ -13,12 +13,14 @@ public class SaveLoad : MonoBehaviour
     private void Start()
     {
         Debug.Log("PATH: " + Application.persistentDataPath);
+        //C:/Users/xonoz/AppData/LocalLow/DefaultCompany/Keyboard
+        Directory.CreateDirectory(Application.persistentDataPath + "/testfolder");
     }
 
     public void Save()
     {
         BinaryFormatter bf = new BinaryFormatter();
-        FileStream file = File.Create(Application.persistentDataPath + "/datosxd.banana");
+        FileStream file = File.Create(Application.persistentDataPath + "/testfolder/datosxd.banana");
         
         Name name = new Name();
         name.name = inputField.text;
