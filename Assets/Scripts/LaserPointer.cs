@@ -1,6 +1,10 @@
 ﻿//////////
 //  To render a laser pointer in the controller to interact with UI elements (add colliders to UI elements, can be as triggers)
-//  Script attached to: LaserPointer (empty GameObject, must be attached to one of the hands)
+//  Script attached to: LaserPointer (empty GameObject, must be attached to one of the hands).
+//
+//  If using the Keyboard, drag the keyboard prefab into the scene to create an instance and assign that instance to the keyboard field in this component
+//
+//  Note: do not change the Direction field of a slider, rotate it instead
 //////////
 using System.Collections;
 using System.Collections.Generic;
@@ -11,7 +15,9 @@ using UnityEngine.UI;
 
 public class LaserPointer : MonoBehaviour
 {
+    [Tooltip("The hand to attach the laser pointer to")]
     public GameObject hand;
+    [Tooltip("The keyboard instance in the scene")]
     public GameObject keyboard;
     public SteamVR_Action_Boolean trigger;
     public float laserDistance = 1;
@@ -246,7 +252,7 @@ public class LaserPointer : MonoBehaviour
 
         //Set the value of the slider/scrollbar (0 - 1)
         if(slider != null)
-            slider.value = hitPoint / sliderSize;
+            slider.value = Mathf.Lerp(slider.minValue, slider.maxValue, hitPoint / sliderSize);
 
         else if(scrollbar != null)
             scrollbar.value = hitPoint / sliderSize;

@@ -123,8 +123,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hand: {fileID: 0}
-  keyboard: {fileID: 7782999628408961329, guid: 90f8b69b39c7c2c4e94b90de20cbadd2,
-    type: 3}
+  keyboard: {fileID: 0}
   trigger:
     actionPath: /actions/default/in/InteractUI
     needsReinit: 0
