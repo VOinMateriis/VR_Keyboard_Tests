@@ -60,10 +60,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Keyboard.cs" />
-    <Compile Include="Assets\Scripts\LaserPointer.cs" />
     <Compile Include="Assets\Scripts\SaveLoad.cs" />
     <Compile Include="Assets\Scripts\ShowControllers.cs" />
+    <Compile Include="Assets\UI_LaserPointer_Keyboard\Keyboard.cs" />
+    <Compile Include="Assets\UI_LaserPointer_Keyboard\LaserPointer.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>C:/Users/xonoz/Desktop/Vidal/Keyboard/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
