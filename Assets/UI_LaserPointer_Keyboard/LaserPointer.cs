@@ -19,10 +19,11 @@ public class LaserPointer : MonoBehaviour
     public GameObject hand;
     [Tooltip("The keyboard instance in the scene")]
     public GameObject keyboard;
+    public Material colorPickerTarget;
     public SteamVR_Action_Boolean trigger;
     public float laserDistance = 1;
     [Tooltip("Define and add this tags to input fields and sliders/scrollbars - UI Layer is the default for all UI elements")]
-    public string UI_Layer = "UI", InputField_Tag = "InputField", SliderScroll_Tag = "Slider_Scroll";
+    public string UI_Layer = "UI", InputField_Tag = "InputField", SliderScroll_Tag = "Slider_Scroll", ColorPicker_Tag = "Colors";
 
     private GameObject currentUI = null;
     private List<GameObject> previousUI = new List<GameObject>();
@@ -30,9 +31,11 @@ public class LaserPointer : MonoBehaviour
     private GameObject dot;
     private Slider slider;
     private Scrollbar scrollbar;
+    private Texture2D colorPicker;
+    private Vector2 colorPickerSize;
     private SteamVR_Input_Sources _hand;
     private bool hovering;
-    private bool[] firstTime = new bool[2];
+    private bool firstTime = true;
 
 
     //================================================================================
@@ -47,9 +50,6 @@ public class LaserPointer : MonoBehaviour
             _hand = SteamVR_Input_Sources.RightHand;
         else if (hand.name == "LeftHand")
             _hand = SteamVR_Input_Sources.LeftHand;
-
-        firstTime[0] = true;
-        firstTime[1] = true;
     }
 
 
@@ -89,17 +89,42 @@ public class LaserPointer : MonoBehaviour
             //If the UI element is a slider, moves it while pulling the trigger;
             else if (trigger.GetState(_hand) && currentUI.CompareTag(SliderScroll_Tag))
             {
-                if (firstTime[0])
+                //Takes the scrollbar or slider reference
+                if (firstTime)
                 {
-                    firstTime[1] = true;
-                    firstTime[0] = false;
+                    if (currentUI.GetComponent<Slider>() != null)
+                    {
+                        slider = currentUI.GetComponent<Slider>();
+                        scrollbar = null;
+                    }
+                    else if (currentUI.GetComponent<Scrollbar>() != null)
+                    {
+                        scrollbar = currentUI.GetComponent<Scrollbar>();
+                        slider = null;
+                    }
+
+                    firstTime = false;
                 }
 
                 //Moves the slider/scrollbar
                 MoveSlider(currentUI, hit);
             }
+            else if (trigger.GetState(_hand) && currentUI.CompareTag(ColorPicker_Tag))
+            {
+                //Get the texture of the colors sprite and the size of its collider
+                if (firstTime)
+                {
+                    colorPicker = currentUI.GetComponent<Image>().sprite.texture;
+                    colorPickerSize = currentUI.GetComponent<BoxCollider>().size;
+                    
+                    firstTime = false;
+                }
+
+                //Picks the color
+                PickColor(currentUI, hit);
+            }
             else
-                firstTime[0] = true;
+                firstTime = true;
         }
 
         //If no UI element is being pointed
@@ -112,10 +137,12 @@ public class LaserPointer : MonoBehaviour
             }
                 
             hovering = false;
-            firstTime[0] = true;
+            firstTime = true;
         }
 
+        //Set the length of the laser and the position of the dot
         SetLaser(hit);
+
         //Debug.DrawRay(transform.parent.position, transform.parent.forward * laserLength);
     }
 
@@ -190,6 +217,23 @@ public class LaserPointer : MonoBehaviour
 
 
     //================================================================================
+    //Gets the color from the colors sprite and assign it to the target
+    private void PickColor(GameObject currentUI, RaycastHit hit)
+    {
+        //Gets the hit point in color picker's local space
+        Vector2 hitPoint = currentUI.transform.InverseTransformPoint(hit.point);
+
+        //Converts the raw coordinates(positive or negative) into a 0 % to 100 % value of the colorPickerSize
+        hitPoint.x = (colorPickerSize.x / 2) + hitPoint.x;
+        hitPoint.y = (colorPickerSize.y / 2) + hitPoint.y;
+
+        //Get the current pixel's color according to the hit point and assign it to the target
+        colorPickerTarget.color = colorPicker.GetPixel((int)hitPoint.x, (int)hitPoint.y);
+    }
+
+
+
+    //================================================================================
     //Moves the slider/scrollbar
     private void MoveSlider(GameObject currentUI, RaycastHit hit)
     {
@@ -197,24 +241,6 @@ public class LaserPointer : MonoBehaviour
         float sliderSize = 0;
         //Hit point in slider's local space (-halfSliderSize --> 0 --> halfSliderSize)
         float hitPoint = 0;
-
-
-        //Takes the scrollbar or slider reference
-        if (firstTime[1])
-        {
-            if (currentUI.GetComponent<Slider>() != null)
-            {
-                slider = currentUI.GetComponent<Slider>();
-                scrollbar = null;
-            }
-            else if (currentUI.GetComponent<Scrollbar>() != null)
-            {
-                scrollbar = currentUI.GetComponent<Scrollbar>();
-                slider = null;
-            }
-
-            firstTime[1] = false;
-        }
 
 
         //If the current UI is a scrollbar

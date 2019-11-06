@@ -60,6 +60,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\ColorPicker.cs" />
     <Compile Include="Assets\Scripts\SaveLoad.cs" />
     <Compile Include="Assets\Scripts\ShowControllers.cs" />
     <Compile Include="Assets\UI_LaserPointer_Keyboard\Keyboard.cs" />
