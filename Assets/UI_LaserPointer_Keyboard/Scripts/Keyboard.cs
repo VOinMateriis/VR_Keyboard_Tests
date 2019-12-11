@@ -9,19 +9,28 @@ public class Keyboard : MonoBehaviour
 
     public void KeyPressed(string key)
     {
-        output.text += key;
+        if (output != null)
+        {
+            output.text += key;
+        }
     }
 
     public void Delete()
     {
-        if(output.text.Length != 0)
-            output.text = output.text.Remove(output.text.Length - 1, 1);
+        if (output != null)
+        {
+            if (output.text.Length != 0)
+                output.text = output.text.Remove(output.text.Length - 1, 1);
+        }
     }
 
     public void Space()
     {
-        if (output.text.Length != 0)
-            output.text += " ";
+        if (output != null)
+        {
+            if (output.text.Length != 0)
+                output.text += " ";
+        }
     }
 
     public void Close()
